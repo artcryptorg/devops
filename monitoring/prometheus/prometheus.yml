@@ -1,0 +1,29 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+rule_files:
+  - alert.yml
+
+scrape_configs:
+  - job_name: 'node_exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['node-exporter:9100'] #here you need to indicate server IP or make a network in docker compous
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'cadvisor'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['cadvisor:8080']
+        labels:
+          label: 'cadvisor'
+  - job_name: 'node_exporter_name'
+    scrape_interval: 5s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['x.x.x.x:9100']
+        labels:
+          label: 'name'
